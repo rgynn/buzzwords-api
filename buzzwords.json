@@ -7,6 +7,10 @@
         "testing",
         "reloading",
         "initiating",
+        "drawing",
+        "tailing",
+        "securing",
+        "printing",
         "downloading",
         "hacking",
         "transcoding",
@@ -24,7 +28,12 @@
         "reticulating",
         "injesting",
         "spamming",
-        "truncating"
+        "truncating",
+        "reverse engineering",
+        "calling",
+        "benchmarking",
+        "federating",
+        "calculating"
     ],
     "adjectives": [
         "agile",
