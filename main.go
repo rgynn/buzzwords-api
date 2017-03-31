@@ -11,6 +11,7 @@ import (
 )
 
 type buzzwords struct {
+	Verbs      []string `json:"verbs"`
 	Adjectives []string `json:"adjectives"`
 	Nouns      []string `json:"nouns"`
 }
@@ -24,6 +25,7 @@ func main() {
 
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/words", wordsHandler)
+	http.HandleFunc("/verbs", verbsHandler)
 
 	var port string
 	if os.Getenv("PORT") != "" {
@@ -60,6 +62,15 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(adjective + " " + noun))
+}
+
+func verbsHandler(w http.ResponseWriter, r *http.Request) {
+	verb := words.Verbs[rand.Intn(len(words.Verbs))]
+	adjective := words.Adjectives[rand.Intn(len(words.Adjectives))]
+	noun := words.Nouns[rand.Intn(len(words.Nouns))]
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(verb + " " + adjective + " " + noun))
 }
 
 func wordsHandler(w http.ResponseWriter, r *http.Request) {
