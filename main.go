@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"io/ioutil"
+	"os"
 )
 
 type buzzwords struct {
@@ -24,7 +25,13 @@ func main() {
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/words", wordsHandler)
 
-	log.Fatal(http.ListenAndServe(":3001", nil))
+	var port string
+	if os.Getenv("PORT") != "" {
+		port = ":" + os.Getenv("PORT")
+	} else {
+		port = ":3001"
+	}
+	log.Fatal(http.ListenAndServe(port, nil))
 
 }
 
