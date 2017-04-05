@@ -52,6 +52,7 @@
         "crowdfunded",
         "data aware",
         "deep learning",
+        "developer focused",
         "disruptive",
         "distributed",
         "eagerly loaded",
@@ -59,7 +60,7 @@
         "event driven",
         "everything on-demand",
         "gesture based",
-        "global",
+        "globally accessible",
         "greenwashing",
         "haptic",
         "hassle free",
@@ -89,6 +90,7 @@
         "serverless",
         "service-oriented",
         "software defined",
+        "social media driven",
         "stateless",
         "viral",
         "wearable"
@@ -104,7 +106,7 @@
         "blockchains",
         "business intelligence",
         "chaosmonkey",
-        "chatbot",
+        "chatbots",
         "chatops",
         "computing",
         "configuration management",
@@ -129,7 +131,7 @@
         "devops",
         "devsec",
         "job dispatchers",
-        "embedded",
+        "embedded devices",
         "faas",
         "filesystem",
         "gamification",
@@ -159,7 +161,7 @@
         "service integration",
         "site reliability management",
         "slack integration",
-        "social media",
+        "slack bots",
         "software development",
         "surveillance",
         "thought leaders",
@@ -169,5 +171,8 @@
         "video transcoding",
         "virtual assistants",
         "virtual reality"
+    ],
+    "suffixes": [
+        "as a service"
     ]
 }
