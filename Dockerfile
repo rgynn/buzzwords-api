@@ -2,8 +2,8 @@ FROM golang:1.8.0-alpine
 
 ENV PORT "3000"
 EXPOSE 3000
-
-COPY . /go/src/github.com/hajhatten/buzzwords-api
+WORKDIR /go/src/github.com/hajhatten/buzzwords-api
+ADD . /go/src/github.com/hajhatten/buzzwords-api
 
 RUN apk update && \
     apk upgrade && \

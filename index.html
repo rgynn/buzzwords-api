@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Buzzword Generator</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/public/css/bootstrap.min.css" />
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container" id="app">
+            <center>
+                <h1>
+                    <v-cloak>{{ buzzword }}</v-cloak>
+                </h1>
+                <br />
+                <div class="form-group">
+                    <button class="btn btn-primary" v-on:click="getBuzzword()">Buzzword</button>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" v-on:click="getBuzzwordWithSuffix()">With suffix</button>
+                    <button class="btn btn-primary" v-on:click="getBuzzwordWithVerb()">With verb</button>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" v-on:click="getBuzzwordWithVerbAndSuffix()">With verb and suffix</button>
+                </div>
+            </center>
+        </div>
+        <script src="/public/js/vendor/jquery.min.js"></script>
+        <script src="/public/js/vendor/bootstrap.min.js"></script>
+        <script src="/public/js/vendor/vue.min.js"></script>
+        <script src="/public/js/app.js"></script>
+    </body>
+</html>

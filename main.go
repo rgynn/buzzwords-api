@@ -11,10 +11,15 @@ import (
 
 func main() {
 
+	fs := http.FileServer(http.Dir("public"))
+	http.Handle("/public/", http.StripPrefix("/public/", fs))
+
 	http.HandleFunc("/", rootHandler)
-	http.HandleFunc("/verbs", verbsHandler)
+
+	http.HandleFunc("/buzzword", verbsHandler)
+	http.HandleFunc("/verb", verbsHandler)
 	http.HandleFunc("/suffix", suffixHandler)
-	http.HandleFunc("/verbssuffix", verbsAndSuffixHandler)
+	http.HandleFunc("/verbsuffix", verbsAndSuffixHandler)
 
 	var port string
 	if os.Getenv("PORT") != "" {
@@ -22,10 +27,10 @@ func main() {
 	} else {
 		port = ":3001"
 	}
+
 	log.Fatal(http.ListenAndServe(port, nil))
 
 }
-
 func responseWithJSON(w http.ResponseWriter, body interface{}, code int) {
 	result, err := json.Marshal(body)
 	if err != nil {
@@ -43,6 +48,10 @@ func responseWithText(w http.ResponseWriter, body string, code int) {
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "index.html")
+}
+
+func buzzwordsHandler(w http.ResponseWriter, r *http.Request) {
 	responseWithText(w, buzzwords.BuzzWords(), 200)
 }
 
