@@ -4,8 +4,11 @@ ENV PORT "3000"
 EXPOSE 3000
 
 COPY . /go/src/github.com/hajhatten/buzzwords-api
-COPY buzzwords.json /go/buzzwords.json
 
+RUN apk update && \
+    apk upgrade && \
+    apk add git
+RUN go get github.com/hajhatten/buzzwords
 RUN go install github.com/hajhatten/buzzwords-api
 
 CMD ["buzzwords-api"]

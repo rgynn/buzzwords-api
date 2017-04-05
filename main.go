@@ -3,29 +3,18 @@ package main
 import (
 	"encoding/json"
 	"log"
-	"math/rand"
 	"net/http"
-
-	"io/ioutil"
 	"os"
-)
 
-type buzzwords struct {
-	Verbs      []string `json:"verbs"`
-	Adjectives []string `json:"adjectives"`
-	Nouns      []string `json:"nouns"`
-}
-
-var (
-	words buzzwords
+	"github.com/hajhatten/buzzwords"
 )
 
 func main() {
-	words = readJSONFile("buzzwords.json")
 
 	http.HandleFunc("/", rootHandler)
-	http.HandleFunc("/words", wordsHandler)
 	http.HandleFunc("/verbs", verbsHandler)
+	http.HandleFunc("/suffix", suffixHandler)
+	http.HandleFunc("/verbssuffix", verbsAndSuffixHandler)
 
 	var port string
 	if os.Getenv("PORT") != "" {
@@ -35,15 +24,6 @@ func main() {
 	}
 	log.Fatal(http.ListenAndServe(port, nil))
 
-}
-
-func readJSONFile(filename string) buzzwords {
-	raw, err := ioutil.ReadFile(filename)
-	if err != nil {
-		panic(err)
-	}
-	json.Unmarshal(raw, &words)
-	return words
 }
 
 func responseWithJSON(w http.ResponseWriter, body interface{}, code int) {
@@ -56,23 +36,24 @@ func responseWithJSON(w http.ResponseWriter, body interface{}, code int) {
 	w.Write(result)
 }
 
-func rootHandler(w http.ResponseWriter, r *http.Request) {
-	adjective := words.Adjectives[rand.Intn(len(words.Adjectives))]
-	noun := words.Nouns[rand.Intn(len(words.Nouns))]
+func responseWithText(w http.ResponseWriter, body string, code int) {
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(adjective + " " + noun))
+	w.WriteHeader(code)
+	w.Write([]byte(body))
+}
+
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	responseWithText(w, buzzwords.BuzzWords(), 200)
 }
 
 func verbsHandler(w http.ResponseWriter, r *http.Request) {
-	verb := words.Verbs[rand.Intn(len(words.Verbs))]
-	adjective := words.Adjectives[rand.Intn(len(words.Adjectives))]
-	noun := words.Nouns[rand.Intn(len(words.Nouns))]
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(verb + " " + adjective + " " + noun))
+	responseWithText(w, buzzwords.WithVerb(), 200)
 }
 
-func wordsHandler(w http.ResponseWriter, r *http.Request) {
-	responseWithJSON(w, words, 200)
+func suffixHandler(w http.ResponseWriter, r *http.Request) {
+	responseWithText(w, buzzwords.WithSuffix(), 200)
+}
+
+func verbsAndSuffixHandler(w http.ResponseWriter, r *http.Request) {
+	responseWithText(w, buzzwords.WithVerbAndSuffix(), 200)
 }
