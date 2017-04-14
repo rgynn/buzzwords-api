@@ -1,10 +1,16 @@
-memo = "d48912e9f53de4950bdeac6d9c09e8e804be195f48aa04babaf8325ea193ca60"
+memo = "344eeb0437380ee7d7a9c3497cfd1642ad287075f5ce9c333648ee5cd6df9b79"
 
 [[projects]]
   branch = "master"
   name = "github.com/beorn7/perks"
   packages = ["quantile"]
   revision = "4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/elazarl/go-bindata-assetfs"
+  packages = ["."]
+  revision = "30f82fa23fd844bd5bb1e5f216db87fd77b5eb43"
 
 [[projects]]
   branch = "master"

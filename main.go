@@ -45,7 +45,7 @@ func main() {
 
 	// Static files
 	fs := http.FileServer(assetFS())
-	http.Handle("/public/", http.StripPrefix("/public/", fs))
+	http.Handle("/static/public/", http.StripPrefix("/static/public/", fs))
 
 	// Default route
 	http.HandleFunc("/", rootHandler)
@@ -86,8 +86,18 @@ func responseWithText(w http.ResponseWriter, body string, code int) {
 	w.Write([]byte(body))
 }
 
+func responseWithHTML(w http.ResponseWriter, body []byte, code int) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.WriteHeader(code)
+	w.Write(body)
+}
+
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "index.html")
+	index, err := assetFS().Asset("static/index.html")
+	if err != nil {
+		panic(err)
+	}
+	responseWithHTML(w, index, 200)
 }
 
 func buzzwordsHandler(w http.ResponseWriter, r *http.Request) {
