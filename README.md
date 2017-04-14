@@ -2,7 +2,15 @@
 
 ## Overview
 
-HTTP server to generate plain/text buzzwords from the github.com/hajhatten/buzzwords package.
+HTTP server to generate plain/text buzzwords from the [github.com/hajhatten/buzzwords](https://github.com/hajhatten/buzzwords) package.
+
+```
+/ # UI with buttons to generate buzzwords
+|-- buzzword # generates a plain text response with a buzzword sentence
+|-- suffix # generates a plain text response with a buzzword sentence including suffix
+|-- verb # generates a plain text response with a buzzword sentence including verb
+|-- verbsuffix # generates a plain text response with a buzzword sentence including verb and suffix
+```
 
 ## Install
 
