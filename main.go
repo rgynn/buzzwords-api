@@ -44,7 +44,7 @@ func init() {
 func main() {
 
 	// Static files
-	fs := http.FileServer(http.Dir("public"))
+	fs := http.FileServer(assetFS())
 	http.Handle("/public/", http.StripPrefix("/public/", fs))
 
 	// Default route
