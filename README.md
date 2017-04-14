@@ -2,7 +2,7 @@
 
 ## Overview
 
-![screenshot](readme/screenshot.png?raw=true)
+![screenshot](https://raw.githubusercontent.com/hajhatten/buzzwords-api/master/readme/screnshot.png)
 
 HTTP server to generate plain/text buzzwords from the [github.com/hajhatten/buzzwords](https://github.com/hajhatten/buzzwords) package.
 
