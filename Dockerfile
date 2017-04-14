@@ -7,7 +7,8 @@ ADD . /go/src/github.com/hajhatten/buzzwords-api
 
 RUN apk update && \
     apk upgrade && \
-    apk add git
+    apk add git && \
+    rm -rf /var/cache/apk/*
 
 
 RUN go install github.com/hajhatten/buzzwords-api

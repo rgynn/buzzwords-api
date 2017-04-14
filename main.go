@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gorilla/mux"
 	"github.com/hajhatten/buzzwords"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -43,21 +44,20 @@ func init() {
 
 func main() {
 
-	// Static files
-	fs := http.FileServer(assetFS())
-	http.Handle("/static/public/", http.StripPrefix("/static/public/", fs))
-
-	// Default route
-	http.HandleFunc("/", rootHandler)
-
-	// Prometheus metrics
-	http.Handle("/metrics", promhttp.Handler())
+	r := mux.NewRouter()
 
 	// Api routes
-	http.HandleFunc("/buzzword", buzzwordsHandler)
-	http.HandleFunc("/suffix", suffixHandler)
-	http.HandleFunc("/verb", verbsHandler)
-	http.HandleFunc("/verbsuffix", verbsAndSuffixHandler)
+	r.HandleFunc("/buzzword", buzzwordsHandler)
+	r.HandleFunc("/suffix", suffixHandler)
+	r.HandleFunc("/verb", verbsHandler)
+	r.HandleFunc("/verbsuffix", verbsAndSuffixHandler)
+
+	// Prometheus metrics
+	r.Handle("/metrics", promhttp.Handler())
+
+	// Static files
+	fs := http.FileServer(assetFS())
+	r.PathPrefix("/").Handler(fs)
 
 	// Set port for http server
 	var port string
@@ -67,7 +67,7 @@ func main() {
 		port = ":3001"
 	}
 
-	log.Fatal(http.ListenAndServe(port, nil))
+	log.Fatal(http.ListenAndServe(port, r))
 
 }
 func responseWithJSON(w http.ResponseWriter, body interface{}, code int) {
@@ -84,20 +84,6 @@ func responseWithText(w http.ResponseWriter, body string, code int) {
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	w.WriteHeader(code)
 	w.Write([]byte(body))
-}
-
-func responseWithHTML(w http.ResponseWriter, body []byte, code int) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	w.WriteHeader(code)
-	w.Write(body)
-}
-
-func rootHandler(w http.ResponseWriter, r *http.Request) {
-	index, err := assetFS().Asset("static/index.html")
-	if err != nil {
-		panic(err)
-	}
-	responseWithHTML(w, index, 200)
 }
 
 func buzzwordsHandler(w http.ResponseWriter, r *http.Request) {
